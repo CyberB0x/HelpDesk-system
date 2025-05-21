@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now, timedelta
-from .models import Ticket
+from django.contrib.auth.decorators import login_required
+from .models import Ticket, Message
+from .forms import TicketForm
 
 def report_view(request):
     last_30_days = now() - timedelta(days=30)
@@ -11,3 +13,39 @@ def report_view(request):
         'resolved_tickets': resolved_tickets,
         'total_resolved': total_resolved
     })
+
+@login_required
+def ticket_detail_view(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    messages = ticket.messages.all().order_by('created_at')
+
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            msg = form.save(commit=False)
+            msg.sender = request.user
+            msg.ticket = ticket
+            msg.save()
+            return redirect('ticket_detail', ticket_id=ticket.id)
+    else:
+        form = TicketForm()
+
+    return render(request, 'tickets/ticket_detail.html', {
+        'ticket': ticket,
+        'messages': messages,
+        'form': form,
+    })
+
+
+@login_required
+def create_ticket_view(request):
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            ticket.created_by = request.user
+            ticket.save()
+            return redirect('ticket_detail', ticket_id=ticket.id)  # или на список заявок, если сделаешь
+    else:
+        form = TicketForm()
+    return render(request, 'tickets/create_ticket.html', {'form': form})

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create_ticket</title>
+</head>
+<body>
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Создать заявку</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+  </form>
+{% endblock %}
+
+</body>
+</html>

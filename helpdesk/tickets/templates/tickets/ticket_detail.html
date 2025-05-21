@@ -1,0 +1,17 @@
+<h2>{{ ticket.title }}</h2>
+<p>{{ ticket.description }}</p>
+<hr>
+
+<h3>Переписка:</h3>
+{% for msg in messages %}
+  <p><strong>{{ msg.sender.username }}</strong>: {{ msg.text }} ({{ msg.created_at }})</p>
+{% empty %}
+  <p>Сообщений пока нет.</p>
+{% endfor %}
+
+<h4>Новое сообщение:</h4>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Отправить</button>
+</form>
