@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Отчёт по заявкам</title>
+</head>
+<body>
+    <h2>Отчёт за последние 30 дней</h2>
+    <p>Решено заявок: {{ total_resolved }}</p>
+
+    <ul>
+        {% for ticket in resolved_tickets %}
+            <li>{{ ticket.title }} — {{ ticket.created_at }}</li>
+        {% empty %}
+            <li>Нет решённых заявок</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
