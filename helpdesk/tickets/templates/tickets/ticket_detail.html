@@ -1,17 +1,50 @@
-<h2>{{ ticket.title }}</h2>
-<p>{{ ticket.description }}</p>
-<hr>
+{% extends "base.html" %}
+{% block title %}Заявка #{{ ticket.id }}{% endblock %}
 
-<h3>Переписка:</h3>
-{% for msg in messages %}
-  <p><strong>{{ msg.sender.username }}</strong>: {{ msg.text }} ({{ msg.created_at }})</p>
-{% empty %}
-  <p>Сообщений пока нет.</p>
-{% endfor %}
+{% block content %}
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Заявка #{{ ticket.id }} — {{ ticket.title }}</h4>
+    </div>
+    <div class="card-body">
+      <p class="mb-0">{{ ticket.description }}</p>
+      <small class="text-muted">Создана: {{ ticket.created_at|date:"d.m.Y H:i" }} | Статус: {{ ticket.status }}</small>
+    </div>
+  </div>
 
-<h4>Новое сообщение:</h4>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Отправить</button>
-</form>
+  <div class="mb-4">
+    <h5>Переписка</h5>
+    {% if messages %}
+      <ul class="list-group">
+        {% for msg in messages %}
+          <li class="list-group-item">
+            <strong>{{ msg.sender.username }}</strong>
+            <span class="text-muted">({{ msg.created_at|date:"d.m.Y H:i" }})</span>
+            <p class="mb-0">{{ msg.text }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted">Сообщений пока нет.</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Добавить сообщение</h5>
+      <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            {{ form.errors }}
+          </div>
+        {% endif %}
+        <div class="mb-3">
+          {{ form.text.label_tag }}
+          {{ form.text }}
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

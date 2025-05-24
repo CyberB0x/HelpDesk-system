@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tickets',
+    'tickets.apps.TicketsConfig',
 ]
+
+LOGIN_REDIRECT_URL = '/tickets/create/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

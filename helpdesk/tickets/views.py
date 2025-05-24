@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.timezone import now, timedelta
 from django.contrib.auth.decorators import login_required
 from .models import Ticket, Message
-from .forms import TicketForm
+from .forms import TicketForm, MessageForm
 
 def report_view(request):
     last_30_days = now() - timedelta(days=30)
@@ -20,7 +20,7 @@ def ticket_detail_view(request, ticket_id):
     messages = ticket.messages.all().order_by('created_at')
 
     if request.method == 'POST':
-        form = TicketForm(request.POST)
+        form = MessageForm(request.POST)
         if form.is_valid():
             msg = form.save(commit=False)
             msg.sender = request.user
@@ -43,9 +43,9 @@ def create_ticket_view(request):
         form = TicketForm(request.POST)
         if form.is_valid():
             ticket = form.save(commit=False)
-            ticket.created_by = request.user
+            ticket.user = request.user  # ← правильное имя поля из модели
             ticket.save()
-            return redirect('ticket_detail', ticket_id=ticket.id)  # или на список заявок, если сделаешь
+            return redirect('ticket_detail', ticket_id=ticket.id)
     else:
         form = TicketForm()
     return render(request, 'tickets/create_ticket.html', {'form': form})

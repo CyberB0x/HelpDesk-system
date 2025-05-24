@@ -6,10 +6,32 @@
 </head>
 <body>
 {% extends "base.html" %}
+{% block title %}Мои заявки{% endblock %}
 
 {% block content %}
-  <h1>Мои заявки</h1>
-  <!-- список заявок -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Мои заявки</h1>
+    <a href="{% url 'create_ticket' %}" class="btn btn-success">Создать заявку</a>
+  </div>
+
+  {% if tickets %}
+    <div class="list-group">
+      {% for ticket in tickets %}
+        <a href="{% url 'ticket_detail' ticket.id %}" class="list-group-item list-group-item-action">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h5 class="mb-1">#{{ ticket.id }} — {{ ticket.title }}</h5>
+              <small>Статус: {{ ticket.status }}</small>
+            </div>
+            <small>{{ ticket.created_at|date:"d.m.Y H:i" }}</small>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">Заявок пока нет.</p>
+  {% endif %}
 {% endblock %}
+
 </body>
 </html>

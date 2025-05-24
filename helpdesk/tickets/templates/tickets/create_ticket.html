@@ -6,15 +6,27 @@
 </head>
 <body>
 {% extends "base.html" %}
-
+{% block title %}Создать заявку{% endblock %}
 {% block content %}
-  <h2>Создать заявку</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Отправить</button>
-  </form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Создать новую заявку</h4>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Отправить</button>
+            <a href="{% url 'ticket_report' %}" class="btn btn-secondary">Назад</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
-
 </body>
 </html>

@@ -1,18 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Отчёт по заявкам</title>
-</head>
-<body>
-    <h2>Отчёт за последние 30 дней</h2>
-    <p>Решено заявок: {{ total_resolved }}</p>
+{% extends "base.html" %}
 
-    <ul>
-        {% for ticket in resolved_tickets %}
-            <li>{{ ticket.title }} — {{ ticket.created_at }}</li>
-        {% empty %}
-            <li>Нет решённых заявок</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% block title %}Отчёт по заявкам{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header bg-success text-white">
+      <h4 class="mb-0">Отчёт по заявкам (за последние 30 дней)</h4>
+    </div>
+    <div class="card-body">
+      <p class="lead">Решено заявок: <strong>{{ total_resolved }}</strong></p>
+
+      {% if resolved_tickets %}
+        <ul class="list-group">
+          {% for ticket in resolved_tickets %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>{{ ticket.title }}</span>
+              <small class="text-muted">{{ ticket.created_at|date:"d.m.Y H:i" }}</small>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted">Нет решённых заявок за последние 30 дней.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
