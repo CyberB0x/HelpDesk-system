@@ -15,7 +15,7 @@ class HelpdeskTests(TestCase):
             'description': 'Test Description',
             'status': 'open'
         })
-        self.assertEqual(response.status_code, 302)  # redirect after creation
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(Ticket.objects.count(), 1)
         ticket = Ticket.objects.first()
         self.assertEqual(ticket.title, 'Test Ticket')
@@ -41,8 +41,8 @@ class HelpdeskTests(TestCase):
             'text': 'This is a reply message'
         })
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(ticket.messages.count(), 1)  # ✅ исправлено на messages
-        message = ticket.messages.first()             # ✅ исправлено на messages
+        self.assertEqual(ticket.messages.count(), 1)
+        message = ticket.messages.first()
         self.assertEqual(message.text, 'This is a reply message')
         self.assertEqual(message.sender, self.user)
 
@@ -72,5 +72,5 @@ class HelpdeskTests(TestCase):
         response = self.client.get(reverse('ticket_report'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Решено заявок')  # ✅ текст из шаблона
-        self.assertContains(response, '2')  # проверка, что отображаются обе заявки
+        self.assertContains(response, 'Решено заявок')
+        self.assertContains(response, '2')
