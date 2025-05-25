@@ -43,9 +43,15 @@ def create_ticket_view(request):
         form = TicketForm(request.POST)
         if form.is_valid():
             ticket = form.save(commit=False)
-            ticket.user = request.user  # ← правильное имя поля из модели
+            ticket.user = request.user
             ticket.save()
             return redirect('ticket_detail', ticket_id=ticket.id)
     else:
         form = TicketForm()
     return render(request, 'tickets/create_ticket.html', {'form': form})
+
+
+@login_required
+def ticket_list_view(request):
+    tickets = Ticket.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'tickets/ticket_list.html', {'tickets': tickets})

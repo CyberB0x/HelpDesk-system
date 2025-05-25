@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>create_ticket</title>
+    <title>Create ticket</title>
 </head>
 <body>
 {% extends "base.html" %}
-{% block title %}Создать заявку{% endblock %}
+{% block title %}Create Ticket{% endblock %}
 {% block content %}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">Создать новую заявку</h4>
+          <h4 class="mb-0">New Ticket</h4>
         </div>
         <div class="card-body">
           <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Отправить</button>
-            <a href="{% url 'ticket_report' %}" class="btn btn-secondary">Назад</a>
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a href="{% url 'ticket_report' %}" class="btn btn-secondary">Back</a>
+            <a href="{% url 'ticket_list' %}" class="btn btn-secondary">My Tickets</a>
           </form>
         </div>
       </div>

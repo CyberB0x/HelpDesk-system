@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'helpdesk.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'helpdesk_db',
+        'USER': 'root',
+        'PASSWORD': 'kali',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

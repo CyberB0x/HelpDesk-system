@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}Отчёт по заявкам{% endblock %}
+{% block title %}Requests Report{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
   <div class="card">
     <div class="card-header bg-success text-white">
-      <h4 class="mb-0">Отчёт по заявкам (за последние 30 дней)</h4>
+      <h4 class="mb-0">Report on Requests (Last 30 Days)</h4>
     </div>
     <div class="card-body">
-      <p class="lead">Решено заявок: <strong>{{ total_resolved }}</strong></p>
+      <p class="lead">Total resolved: <strong>{{ total_resolved }}</strong></p>
 
       {% if resolved_tickets %}
         <ul class="list-group">
@@ -21,7 +21,7 @@
           {% endfor %}
         </ul>
       {% else %}
-        <p class="text-muted">Нет решённых заявок за последние 30 дней.</p>
+        <p class="text-muted">No resolved requests in the last 30 days.</p>
       {% endif %}
     </div>
   </div>

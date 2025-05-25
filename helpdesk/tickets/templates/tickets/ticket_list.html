@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ticket_list</title>
+    <title>Ticket list</title>
 </head>
 <body>
 {% extends "base.html" %}
-{% block title %}Мои заявки{% endblock %}
+{% block title %}My Requests{% endblock %}
 
 {% block content %}
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Мои заявки</h1>
-    <a href="{% url 'create_ticket' %}" class="btn btn-success">Создать заявку</a>
+    <h1>My Requests</h1>
+    <a href="{% url 'create_ticket' %}" class="btn btn-success">Create Ticket</a>
   </div>
 
   {% if tickets %}
@@ -21,7 +21,7 @@
           <div class="d-flex justify-content-between">
             <div>
               <h5 class="mb-1">#{{ ticket.id }} — {{ ticket.title }}</h5>
-              <small>Статус: {{ ticket.status }}</small>
+              <small>Status: {{ ticket.status }}</small>
             </div>
             <small>{{ ticket.created_at|date:"d.m.Y H:i" }}</small>
           </div>
@@ -29,7 +29,7 @@
       {% endfor %}
     </div>
   {% else %}
-    <p class="text-muted">Заявок пока нет.</p>
+    <p class="text-muted">There are no requests yet.</p>
   {% endif %}
 {% endblock %}
 

@@ -1,19 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Заявка #{{ ticket.id }}{% endblock %}
+{% block title %}Ticket  #{{ ticket.id }}{% endblock %}
 
 {% block content %}
   <div class="card mb-4">
     <div class="card-header bg-primary text-white">
-      <h4 class="mb-0">Заявка #{{ ticket.id }} — {{ ticket.title }}</h4>
+      <h4 class="mb-0">Ticket  #{{ ticket.id }} — {{ ticket.title }}</h4>
     </div>
     <div class="card-body">
       <p class="mb-0">{{ ticket.description }}</p>
-      <small class="text-muted">Создана: {{ ticket.created_at|date:"d.m.Y H:i" }} | Статус: {{ ticket.status }}</small>
+      <small class="text-muted">Created at: {{ ticket.created_at|date:"d.m.Y H:i" }} | Status: {{ ticket.status }}</small>
     </div>
   </div>
 
   <div class="mb-4">
-    <h5>Переписка</h5>
+    <h5>Conversation</h5>
     {% if messages %}
       <ul class="list-group">
         {% for msg in messages %}
@@ -25,25 +25,23 @@
         {% endfor %}
       </ul>
     {% else %}
-      <p class="text-muted">Сообщений пока нет.</p>
+      <p class="text-muted">No messages yet.</p>
     {% endif %}
   </div>
 
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Добавить сообщение</h5>
+      <h5 class="card-title">Send Message</h5>
       <form method="post">
         {% csrf_token %}
-        {% if form.errors %}
-          <div class="alert alert-danger">
-            {{ form.errors }}
-          </div>
-        {% endif %}
-        <div class="mb-3">
+       <div class="mb-3">
           {{ form.text.label_tag }}
-          {{ form.text }}
+          {{ form.text }}  {# class="form-control" #}
+          {% if form.text.errors %}
+            <div class="text-danger small">{{ form.text.errors.0 }}</div>
+          {% endif %}
         </div>
-        <button type="submit" class="btn btn-primary">Отправить</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>

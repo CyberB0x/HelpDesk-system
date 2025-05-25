@@ -15,12 +15,12 @@ class MessageForm(forms.ModelForm):
         model = Message
         fields = ['text']
         labels = {
-            'text': 'Текст сообщения',
+            'text': 'Message Body',
         }
         widgets = {
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 3,
-                'placeholder': 'Введите сообщение...'
+                'placeholder': 'Type your message...'
             }),
         }
